@@ -65,7 +65,7 @@ class Display extends PApplet {
             rect(barFrom, height, BAR_WIDTH,  -barHeight);
 
             float textCenter = (2 * barFrom + BAR_WIDTH) / 2;
-            textSize(16);
+            textSize(14);
             text(sorter.arr[i], textCenter, height - barHeight - NUMBER_Y_OFFSET  );
         }
     }
