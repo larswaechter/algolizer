@@ -1,26 +1,24 @@
 package algolizer;
 
 import processing.core.PApplet;
-import processing.core.PFont;
 
 class Display extends PApplet {
     enum GameState {
         RUNNING, SORTED
     }
 
-    AbsSorter sorter = new SelectionSort(new int[]{8, 3, 14, 1, 5, 22, 17, 7, 35, 9, 20, 3,});
+    AbsSorter sorter = new SelectionSort(new int[]{8, 3, 14, 1, 5, 22, 17, 7, 35, 11, 20, 3});
     GameState state = GameState.RUNNING;
-
-    PFont font;
 
     int bgColor = color(28, 31, 51);
     int fgColor = color(211, 62, 67);
 
     // Window size
-    int width = 800;
+    int width = 700;
     int height = 600;
 
     int frameRate = 30;
+    int sortSpeedSec = 2;
 
     // Bar settings
     int BAR_HEIGHT_FACTOR = 20;
@@ -39,7 +37,7 @@ class Display extends PApplet {
         frameRate(frameRate);
         background(bgColor);
         textAlign(CENTER);
-        font = createFont("Arial", 20);
+        textFont(createFont("Arial", 20));
     }
 
     @Override
@@ -56,8 +54,8 @@ class Display extends PApplet {
     private void drawBars() {
         fill(fgColor);
 
-        if (millis() % 1500 <= frameRate) {
-            background(28, 31, 51);
+        if (frameCount % (sortSpeedSec * frameRate) == 0) {
+            background(bgColor);
             sorter.step();
         }
 
@@ -67,13 +65,13 @@ class Display extends PApplet {
             rect(barFrom, height, BAR_WIDTH,  -barHeight);
 
             float textCenter = (2 * barFrom + BAR_WIDTH) / 2;
+            textSize(16);
             text(sorter.arr[i], textCenter, height - barHeight - NUMBER_Y_OFFSET  );
         }
     }
 
     private void drawSorted() {
-        textAlign(CENTER);
-        textFont(this.font);
+        textSize(20);
         fill(color(fgColor));
         text("Sorted!", (float) this.width / 2, height * 0.10f);
         noLoop();

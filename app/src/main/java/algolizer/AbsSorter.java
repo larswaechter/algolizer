@@ -11,7 +11,7 @@ public abstract class AbsSorter implements ISorter {
 
     AbsSorter(int[] arr) {
         this.arr = arr;
-        this.arrSum = Arrays.stream(this.arr).sum();
+        this.arrSum = Arrays.stream(arr).sum();
         for (int n : arr) this.weights.put(n, ((float) n / this.arrSum) * 100);
     }
 
