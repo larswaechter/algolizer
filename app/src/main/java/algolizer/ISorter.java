@@ -1,5 +1,5 @@
 package algolizer;
 
-public interface ISorter {
-    public void step();
+interface ISorter {
+    void step();
 }

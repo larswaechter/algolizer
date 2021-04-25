@@ -7,25 +7,25 @@ class Display extends PApplet {
         RUNNING, SORTED
     }
 
-    AbsSorter sorter = new SelectionSort(new int[]{8, 3, 14, 1, 5, 22, 17, 7, 35, 11, 20, 3});
-    GameState state = GameState.RUNNING;
+    private GameState state = GameState.RUNNING;
+    private final AbsSorter sorter = new InsertionSort(new int[]{8, 3, 14, 1, 28, 5, 22, 2, 17, 7, 35, 11, 20, 3});
 
-    int bgColor = color(28, 31, 51);
-    int fgColor = color(211, 62, 67);
+    private final int bgColor = color(28, 31, 51);
+    private final int fgColor = color(211, 62, 67);
 
     // Window size
-    int width = 700;
-    int height = 600;
+    private final int width = 700;
+    private final int height = 600;
 
-    int frameRate = 30;
-    int sortSpeedSec = 2;
+    private final int frameRate = 30;
+    private final int sortSpeedSec = 2;
 
     // Bar settings
-    int BAR_HEIGHT_FACTOR = 20;
-    int BAR_WIDTH = 30;
-    int BAR_X_OFFSET = 15;
-    int BAR_X_START = (width - sorter.arr.length * (BAR_WIDTH + BAR_X_OFFSET)) / 2;
-    int NUMBER_Y_OFFSET = 15;
+    private final int BAR_HEIGHT_FACTOR = 20;
+    private final int BAR_WIDTH = 30;
+    private final int BAR_X_OFFSET = 15;
+    private final int BAR_X_START = (width - sorter.numbers.length * (BAR_WIDTH + BAR_X_OFFSET)) / 2;
+    private final int NUMBER_Y_OFFSET = 15;
 
     @Override
     public void settings() {
@@ -59,14 +59,14 @@ class Display extends PApplet {
             sorter.step();
         }
 
-        for (int i = 0; i < sorter.arr.length; i++) {
-            float barHeight = BAR_HEIGHT_FACTOR * sorter.weights.get(sorter.arr[i]);
+        for (int i = 0; i < sorter.numbers.length; i++) {
+            float barHeight = BAR_HEIGHT_FACTOR * sorter.weights.get(sorter.numbers[i]);
             float barFrom = BAR_X_START + i * (BAR_X_OFFSET + BAR_WIDTH);
-            rect(barFrom, height, BAR_WIDTH,  -barHeight);
+            rect(barFrom, height, BAR_WIDTH, -barHeight);
 
             float textCenter = (2 * barFrom + BAR_WIDTH) / 2;
             textSize(14);
-            text(sorter.arr[i], textCenter, height - barHeight - NUMBER_Y_OFFSET  );
+            text(sorter.numbers[i], textCenter, height - barHeight - NUMBER_Y_OFFSET);
         }
     }
 

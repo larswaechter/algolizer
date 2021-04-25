@@ -4,20 +4,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class AbsSorter implements ISorter {
-    final int[] arr;
-    final int arrSum;
+    final int[] numbers;
 
     HashMap<Integer, Float> weights = new HashMap<>();
 
-    AbsSorter(int[] arr) {
-        this.arr = arr;
-        this.arrSum = Arrays.stream(arr).sum();
-        for (int n : arr) this.weights.put(n, ((float) n / this.arrSum) * 100);
+    AbsSorter(int[] numbers) {
+        this.numbers = numbers;
+        int sum = Arrays.stream(numbers).sum();
+        for (int n : numbers) this.weights.put(n, ((float) n / sum) * 100);
     }
 
     boolean isSorted() {
-        for (int i = 0; i < arr.length - 1; i++)
-            if (arr[i] > arr[i + 1])
+        for (int i = 0; i < numbers.length - 1; i++)
+            if (numbers[i] > numbers[i + 1])
                 return false;
         return true;
     }

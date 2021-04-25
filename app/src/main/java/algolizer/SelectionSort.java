@@ -1,21 +1,23 @@
 package algolizer;
 
 class SelectionSort extends AbsSorter {
-    int lastSwitchIdx = 0;
+    private int lastSwitchIdx;
 
-    SelectionSort(int[] arr) {
-        super(arr);
+    SelectionSort(int[] numbers) {
+        super(numbers);
     }
 
     @Override
     public void step() {
         int min = lastSwitchIdx;
-        for (int i = lastSwitchIdx + 1; i < arr.length; i++)
-            if(arr[i] < arr[min]) min = i;
 
-        int tmp = arr[lastSwitchIdx];
-        arr[lastSwitchIdx] = arr[min];
-        arr[min] = tmp;
-        lastSwitchIdx++;
+        // Find minimum
+        for (int i = lastSwitchIdx + 1; i < numbers.length; i++)
+            if (numbers[i] < numbers[min]) min = i;
+
+        // Switch minimum
+        int tmp = numbers[lastSwitchIdx];
+        numbers[lastSwitchIdx++] = numbers[min];
+        numbers[min] = tmp;
     }
 }
