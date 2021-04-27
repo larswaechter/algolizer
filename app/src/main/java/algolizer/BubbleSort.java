@@ -1,8 +1,7 @@
 package algolizer;
 
 class BubbleSort extends AbsSorter {
-    private int lastSwitchIdx;
-    private int sortedCount;
+    private int lastSwitchIdx, sortedCount;
 
     BubbleSort(int[] numbers) {
         super(numbers);

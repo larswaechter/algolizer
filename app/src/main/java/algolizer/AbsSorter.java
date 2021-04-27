@@ -4,9 +4,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class AbsSorter implements ISorter {
-    final int[] numbers;
+    enum Algorithms {
+        BUBBLESORT, INSERTIONSORT, SELECTIONSORT
+    }
 
+    final int[] numbers;
     HashMap<Integer, Float> weights = new HashMap<>();
+
+    static AbsSorter create(AbsSorter.Algorithms algorithm, int[] numbers) {
+        return switch (algorithm) {
+            case BUBBLESORT -> new BubbleSort(numbers);
+            case INSERTIONSORT -> new InsertionSort(numbers);
+            case SELECTIONSORT -> new SelectionSort(numbers);
+        };
+    }
 
     AbsSorter(int[] numbers) {
         this.numbers = numbers;
