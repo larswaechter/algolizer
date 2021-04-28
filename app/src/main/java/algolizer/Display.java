@@ -19,14 +19,14 @@ class Display extends PApplet {
     private final int width = 700;
     private final int height = 600;
 
-    private final int frameRate = 15;
+    private final int frameRate = 10;
 
     // Bar settings
     private final int BAR_HEIGHT_FACTOR = 20;
     private final int BAR_WIDTH = 30;
     private int BAR_X_START;
     private final int BAR_X_OFFSET = 15;
-    private final int NUMBER_Y_OFFSET = 15;
+    private final int NUMBER_Y_OFFSET = 20;
 
     @Override
     public void settings() {
@@ -39,6 +39,7 @@ class Display extends PApplet {
         frameRate(frameRate);
         background(bgColor);
         textAlign(CENTER, CENTER);
+        textSize(15);
     }
 
     @Override
@@ -58,6 +59,9 @@ class Display extends PApplet {
                 case DOWN -> sorterIdx = Math.min(AbsSorter.Algorithms.values().length - 1, sorterIdx + 1);
                 case 32 -> initGame(); // Space
             }
+        } else if (state == GameState.SORTED && keyCode == 32) {
+            state = GameState.MENU;
+            loop();
         }
     }
 
@@ -70,15 +74,23 @@ class Display extends PApplet {
     }
 
     private void drawMenu() {
-        textSize(16);
+        background(bgColor);
         AbsSorter.Algorithms[] algorithms = AbsSorter.Algorithms.values();
+
+        fill(white);
+        textSize(24);
+        text("Algolizer", (float) width / 2, height * 0.1f);
+
+        textSize(15);
+        text("select with <space>", (float) width / 2, height * 0.16f);
+
 
         int RECT_WIDTH = 250;
         int RECT_HEIGHT = 100;
 
         int RECT_X_FROM = (width - RECT_WIDTH) / 2;
         int RECT_Y_OFFSET = 20;
-        int RECT_Y_FROM = (height - algorithms.length * (RECT_HEIGHT + RECT_Y_OFFSET)) / 2;
+        int RECT_Y_FROM = (height - algorithms.length * (RECT_HEIGHT + RECT_Y_OFFSET)) / 2 + 40;
 
         float fromY = 0;
 
@@ -94,36 +106,36 @@ class Display extends PApplet {
             text(algorithm.name(), (float) width / 2, (2 * fromY + RECT_HEIGHT) / 2);
         }
 
-        text("select with <space>", (float) width / 2, fromY + RECT_HEIGHT + 50);
     }
 
     private void drawRunning() {
-        fill(fgColor);
+        background(bgColor);
         stroke(fgColor);
-        textSize(14);
+
+        text(AbsSorter.Algorithms.values()[sorterIdx].name(), (float) width / 2, height * 0.05f);
 
         if (sorter.isSorted())
             state = GameState.SORTED;
 
         if (frameCount % frameRate == 0) {
-            background(bgColor);
             sorter.step();
         }
 
         for (int i = 0; i < sorter.numbers.length; i++) {
             float barHeight = BAR_HEIGHT_FACTOR * sorter.weights.get(sorter.numbers[i]);
             float fromX = BAR_X_START + i * (BAR_X_OFFSET + BAR_WIDTH);
+            fill(fgColor);
             rect(fromX, height, BAR_WIDTH, -barHeight);
 
             float textCenter = (2 * fromX + BAR_WIDTH) / 2;
+            fill(white);
             text(sorter.numbers[i], textCenter, height - barHeight - NUMBER_Y_OFFSET);
         }
     }
 
     private void drawSorted() {
-        textSize(18);
-        fill(color(fgColor));
-        text("Sorted!", (float) width / 2, height * 0.10f);
+        fill(color(white));
+        text("Sorted! Press <space> to quit", (float) width / 2, height * 0.09f);
         noLoop();
     }
 }
