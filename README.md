@@ -2,4 +2,4 @@
 Sorting Algorithms Visualizer written in Java + Processing.
 
 ![preview](./preview.png)
-![preview](./preview_2.png)
+![preview_2](./preview_2.png)
